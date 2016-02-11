@@ -3,7 +3,8 @@
 
 <head>
 
-    <meta charset="utf-8">
+  
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -112,24 +113,46 @@
                     </h2>
                     <hr>
                 </div>
-                <div class="col-sm-4 text-center">
+               
+
+                 <!--<div class="col-sm-4 text-center">
                     <img class="img-responsive" src="img/hrac1.jpg" alt="">
                     <h3>Peter Gurský
                         <small>1800</small>
                     </h3>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="img/hrac2.jpg" alt="">
-                    <h3>Majster Sveta
-                        <small>2500</small>
-                    </h3>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="img/hrac3.jpg" alt="">
-                    <h3>Jožko Mrkvička
-                        <small>1200</small>
-                    </h3>
-                </div>
+                </div> -->
+               <!-- <table>
+                    
+                <tr> -->
+                
+                <?php
+                    $found_image = "false";
+                    require "database.php";
+                    $id = 1;
+                    $ok = 1;
+                    do
+                    {
+                        $found_image = false;
+                        $stmt = $dbc->prepare("SELECT * FROM members WHERE id = :id");
+                        $stmt->execute(array(':id' => $id));
+                        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        $found_image = json_encode($data);
+                        //echo $found_image . "<br\>";
+                        //if($id==2) echo $data['secondname'];
+                        if($found_image != "false")
+                        {
+                            //if($id % 3 == 1 && $id != 1) echo "</tr><tr>";
+                            echo " <td> <div class=\"col-sm-4 text-center\"> <img class=\"img-responsive\" src=\"img/" . $data['imgname'] . "\" alt=\"\">         <h3>" . $data['firstname'] . " " . $data['secondname'] . "<small>" . $data['elo'] . " </small> </h3> </div></td>";
+                        }
+                        $id = $id + 1;
+
+
+                    } while($found_image != "false")
+
+                ?>
+               <!-- </tr>
+                </table> -->
                 <div class="clearfix"></div>
             </div>
         </div>
